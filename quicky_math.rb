@@ -124,11 +124,12 @@ class ScoreBoard
 end
 
 class Game
-  attr_accessor :host, :player
+  attr_accessor :host, :player, :score
 
   def initialize
     @host = Host.new
     @player = Player.new
+    @score = 0
   end
 
   def display_welcome_message
@@ -144,21 +145,37 @@ class Game
   end
 
   def play_again?
+    answer = nil
+    loop do
+      puts "Would you like to play again? (y/n)"
+      answer = gets.chomp
+      break if ['y', 'n'].include? answer.downcase
+      puts "Sorry, must be y or n."
+    end
 
+    return false if answer.downcase == 'n'
+    return true if answer.downcase == 'y'
   end
 
   def play
     display_welcome_message
-    problem = Problem.new('2x2add')
-    host.ask(problem)
-    player_answer = player.get_answer
-    solution = problem.solution
 
-    if player_answer == solution
-      puts "You win!"
-    else
-      puts "You lose!"
+    loop do
+      problem = Problem.new('2x2add')
+      host.ask(problem)
+      player_answer = player.get_answer
+      solution = problem.solution
+
+      if player_answer == solution
+        puts "You win!"
+      else
+        puts "You lose!"
+      end
+
+      break unless play_again?
     end
+
+    display_goodbye_message
   end
 end
 
