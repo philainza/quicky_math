@@ -137,6 +137,7 @@ class Game
   end
 
   def display_goodbye_message
+    puts "Score: #{score}"
     puts "Thanks for playing Quicky Math!"
   end
 
@@ -167,9 +168,9 @@ class Game
       solution = problem.solution
 
       if player_answer == solution
-        puts "You win!"
+        self.score += 1
       else
-        puts "You lose!"
+        self.score -= 1
       end
 
       break unless play_again?
