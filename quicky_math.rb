@@ -158,11 +158,18 @@ class Game
     return true if answer.downcase == 'y'
   end
 
+  def choose_level
+    answer = nil
+    puts "Please choose a level: (2x2add)"
+    answer = gets.chomp
+  end
+
   def play
     display_welcome_message
+    level = choose_level
 
     10.times do
-      problem = Problem.new('2x2add')
+      problem = Problem.new(level)
       host.ask(problem)
       player_answer = player.get_answer
       solution = problem.solution
