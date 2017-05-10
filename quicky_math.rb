@@ -161,7 +161,7 @@ class Game
   def play
     display_welcome_message
 
-    loop do
+    10.times do
       problem = Problem.new('2x2add')
       host.ask(problem)
       player_answer = player.get_answer
@@ -169,12 +169,13 @@ class Game
 
       if player_answer == solution
         self.score += 1
+        system 'clear'
       else
         self.score -= 1
+        system 'clear'
       end
-
-      break unless play_again?
     end
+
 
     display_goodbye_message
   end
